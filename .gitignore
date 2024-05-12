@@ -1,0 +1,25 @@
+# Dependencies and AdonisJS build
+backend/node_modules
+backend/build
+backend/tmp
+
+# Secrets
+backend/.env
+backend/.env.local
+backend/.env.production.local
+backend/.env.development.local
+
+# Frontend assets compiled code
+backend/public/assets
+
+# Build tools specific
+backend/npm-debug.log
+backend/yarn-error.log
+
+# Editors specific
+backend/.fleet
+backend/.idea
+backend/.vscode
+
+# Platform specific
+backend/.DS_Store
