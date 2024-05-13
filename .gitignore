@@ -1,3 +1,5 @@
+#Backend
+
 # Dependencies and AdonisJS build
 backend/node_modules
 backend/build
@@ -23,3 +25,30 @@ backend/.vscode
 
 # Platform specific
 backend/.DS_Store
+
+#Frontend
+
+# Nuxt dev/build outputs
+frontend/.output
+frontend/.data
+frontend/.nuxt
+frontend/.nitro
+frontend/.cache
+frontend/dist
+
+# Node dependencies
+frontend/node_modules
+
+# Logs
+frontend/logs
+frontend/*.log
+
+# Misc
+frontend/.DS_Store
+frontend/.fleet
+frontend/.idea
+
+# Local env files
+frontend/.env
+frontend/.env.*
+frontend/!.env.example
