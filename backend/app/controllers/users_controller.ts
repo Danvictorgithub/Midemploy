@@ -14,7 +14,7 @@ export default class UsersController {
   /**
    * Handle form submission for the create action
    */
-  async store({ request, response }: HttpContext) {
+  async store({ request }: HttpContext) {
     // const data = request.only(["fullName", "email", "password", "type"])
     const payload = await request.validateUsing(createUserValidator);
     const user = await User.findBy('email', payload.email)

@@ -12,7 +12,7 @@ export class supabaseService {
       this.supabase = createClient(env.get('SUPABASE_URL'), env.get('SUPABASE_KEY'));
 
       // Perform a test query to check the validity of the Supabase key
-      const { data, error } = await this.supabase.from('').select('*').limit(1);
+      const { error } = await this.supabase.from('').select('*').limit(1);
 
       if (error) {
         throw new Error(`Error performing test query: ${error.message}`);
