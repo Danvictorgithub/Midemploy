@@ -17,7 +17,7 @@ export default class ResendEmailVerificationsController {
       })
     }
     if (user.isEmailVerified) {
-      response.badRequest({ message: 'Email already verified' });
+      return response.badRequest({ message: 'Email already verified' });
     }
     const existingEmailVerification = await user.related('emailVerification').query().first();
     if (existingEmailVerification) {

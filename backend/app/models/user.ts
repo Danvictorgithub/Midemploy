@@ -6,6 +6,7 @@ import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
 import EmailVerification from './email_verification.js'
 import type { HasOne } from '@adonisjs/lucid/types/relations'
+import Business from './business.js'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
@@ -15,6 +16,9 @@ const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
 export default class User extends compose(BaseModel, AuthFinder) {
   @hasOne(() => EmailVerification)
   declare emailVerification: HasOne<typeof EmailVerification>
+
+  @hasOne(() => Business)
+  declare business: HasOne<typeof Business>
 
   @column({ isPrimary: true })
   declare id: number

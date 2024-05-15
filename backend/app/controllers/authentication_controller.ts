@@ -16,7 +16,6 @@ export default class AuthenticationController {
     return { access_token: token.value?.release() }
   }
   async validate({ auth }: HttpContext) {
-    // const user = await auth.authenticate();
     return auth.user
   }
   async register(ctx: HttpContext) {

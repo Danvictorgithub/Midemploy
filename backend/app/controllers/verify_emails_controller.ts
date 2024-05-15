@@ -8,7 +8,7 @@ export default class VerifyEmailController {
     const emailVerification = await EmailVerification.findOrFail(params.id);
     const user = await emailVerification.related('user').query().firstOrFail();
     if (user.isEmailVerified) {
-      response.badRequest({ message: 'Email already verified' });
+      return response.badRequest({ message: 'Email already verified' });
     }
     user.isEmailVerified = true;
     await user.save();

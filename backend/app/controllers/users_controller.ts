@@ -10,7 +10,10 @@ export default class UsersController {
   /**
    * Display a list of resource
    */
-  async index({ }: HttpContext) {
+  async index({ response }: HttpContext) {
+    if (env.get('NODE_ENV') !== 'development') {
+      return response.unauthorized({ message: 'Unauthorized' });
+    }
     return User.all()
   }
 
@@ -46,15 +49,24 @@ export default class UsersController {
   /**
    * Show individual record
    */
-  async show({ params }: HttpContext) {
+  async show({ params, response }: HttpContext) {
+    if (env.get('NODE_ENV') !== 'development') {
+      return response.unauthorized({ message: 'Unauthorized' });
+    }
     return User.findOrFail(params.id)
   }
 
   /**
    * Handle form submission for the edit action
    */
-  async update({ params, request }: HttpContext) {
+  async update({ params, request, auth, response }: HttpContext) {
     const user = await User.findOrFail(params.id)
+    await auth.check();
+    if (auth.user!.id !== user.id) {
+      return response.unauthorized();
+    } else if (env.get('NODE_ENV') !== 'development') {
+      return response.unauthorized();
+    }
     const payload = await request.validateUsing(updateUserValidor);
     return user.merge(payload).save()
   }
@@ -62,8 +74,14 @@ export default class UsersController {
   /**
    * Delete record
    */
-  async destroy({ params }: HttpContext) {
+  async destroy({ params, auth, response }: HttpContext) {
     const user = await User.findOrFail(params.id)
+    await auth.check();
+    if (auth.user!.id !== user.id) {
+      return response.unauthorized();
+    } else if (env.get('NODE_ENV') !== 'development') {
+      return response.unauthorized();
+    }
     await user.delete()
     return user;
   }
