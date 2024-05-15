@@ -29,13 +29,17 @@ export default class SupabaseProvider {
   /**
    * The application has been booted
    */
-  async start() { }
+  async start() {
+    if (this.app.getEnvironment() === 'web') {
+      console.log("Supabase Provider is ready");
+    }
+  }
 
   /**
    * The process has been started
    */
   async ready() {
-    console.log("Supabase Provider is ready");
+    // console.log("Supabase Provider is ready");
   }
 
   /**

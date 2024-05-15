@@ -32,5 +32,8 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @column()
   declare type: 'job_seeker' | 'employer' | null;
 
+  @column()
+  declare isEmailVerified: boolean | null;
+
   static accessTokens = DbAccessTokensProvider.forModel(User)
 }

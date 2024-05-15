@@ -17,7 +17,7 @@ export default class UsersController {
   async store({ request }: HttpContext) {
     // const data = request.only(["fullName", "email", "password", "type"])
     const payload = await request.validateUsing(createUserValidator);
-    const user = await User.findBy('email', payload.email)
+    const user = await User.findBy('email', payload.email.toLowerCase())
     if (user) {
       throw new errors.E_VALIDATION_ERROR({
         message: 'Email already exists'

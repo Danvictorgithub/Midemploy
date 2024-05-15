@@ -11,7 +11,7 @@ import AuthenticationController from '#controllers/authentication_controller'
 import UsersController from '#controllers/users_controller'
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
-import UploadController from '#controllers/upload_controller'
+// import UploadController from '#controllers/upload_controller'
 
 router.get('/', async () => {
   return {
@@ -26,4 +26,4 @@ router.group(() => {
   router.get('', [AuthenticationController, 'validate']).use(middleware.auth())
 }).prefix("auth")
 
-router.post("upload", [UploadController, 'upload']);
+// router.post("upload", [UploadController, 'upload']);
