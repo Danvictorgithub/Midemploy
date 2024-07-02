@@ -9,9 +9,12 @@ import { inject } from "@adonisjs/core";
 @inject()
 export default class AuthenticationController {
   constructor(private readonly usersController: UsersController) { }
-  async login({ request }: HttpContext) {
+  async login({ request, response }: HttpContext) {
     const { email, password } = await request.validateUsing(loginValidator);
     const user = await User.verifyCredentials(email, password);
+    if (!user.isEmailVerified) {
+      return response.unauthorized({ message: "Email is not verified, please check your email for confirmation" });
+    }
     const token = await User.accessTokens.create(user);
     return { access_token: token.value?.release() }
   }

@@ -34,6 +34,9 @@ export default class BusinessesController {
     if (!user) {
       return response.notFound({ message: 'User not found' });
     }
+    if (user.type !== 'employer') {
+      return response.badRequest({ message: "User is not an employer" });
+    }
     await user?.load('business')
     if (user?.business) {
       return response.badRequest({ message: 'User already has a business' });
