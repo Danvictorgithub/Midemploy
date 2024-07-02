@@ -11,10 +11,10 @@ export default class ResendEmailVerificationsController {
     const payload = await request.validateUsing(resendEmailValidator);
     const user = await User.findBy('email', payload.email)
     if (!user) {
-      throw response.abort("Email already exist");
+      throw response.abort({ message: "Email already exist" });
     }
     if (user!.isEmailVerified) {
-      return response.badRequest({ message: 'Email already verified' });
+      return response.abort({ message: 'Email already verified' });
     }
     const existingEmailVerification = await user.related('emailVerification').query().first();
     if (existingEmailVerification) {

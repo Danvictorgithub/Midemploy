@@ -4,7 +4,6 @@ import env from '#start/env';
 import { createUserValidator, updateUserValidator } from '#validators/users'
 import type { HttpContext } from '@adonisjs/core/http'
 import mail from '@adonisjs/mail/services/main';
-import { errors } from '@vinejs/vine';
 
 export default class UsersController {
   /**
@@ -25,7 +24,7 @@ export default class UsersController {
     const payload = await request.validateUsing(createUserValidator);
     const user = await User.findBy('email', payload.email)
     if (user) {
-      throw response.abort("Email already exist");
+      throw response.abort({ message: "Email already exist" });
     }
     const newUser = await User.create(payload);
     const emailVerification = await EmailVerification.create({ userId: newUser.id });
