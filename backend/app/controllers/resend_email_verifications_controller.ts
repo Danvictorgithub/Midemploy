@@ -5,18 +5,15 @@ import env from "#start/env";
 import { resendEmailValidator } from "#validators/resend_email";
 import { HttpContext } from "@adonisjs/core/http";
 import mail from "@adonisjs/mail/services/main";
-import { errors } from "@vinejs/vine";
 
 export default class ResendEmailVerificationsController {
   async resend_email_verification({ request, response }: HttpContext) {
     const payload = await request.validateUsing(resendEmailValidator);
     const user = await User.findBy('email', payload.email)
     if (!user) {
-      throw new errors.E_VALIDATION_ERROR({
-        message: 'Email does not exist'
-      })
+      throw response.abort("Email already exist");
     }
-    if (user.isEmailVerified) {
+    if (user!.isEmailVerified) {
       return response.badRequest({ message: 'Email already verified' });
     }
     const existingEmailVerification = await user.related('emailVerification').query().first();

@@ -9,7 +9,7 @@ export const createUserValidator = vine.compile(
   })
 )
 
-export const updateUserValidor = vine.compile(
+export const updateUserValidator = vine.compile(
   vine.object({
     fullName: vine.string().optional(),
     email: vine.string().email().toLowerCase().optional(),

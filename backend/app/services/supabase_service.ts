@@ -19,7 +19,7 @@ export class supabaseService {
       }
 
       console.log('Supabase Initialized');
-      return this.supabase;
+      return this;
     } catch (error) {
       console.error('Error initializing Supabase:', error.message);
       throw new Error('Error initializing Supabase');

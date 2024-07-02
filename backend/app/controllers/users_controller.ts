@@ -1,7 +1,7 @@
 import EmailVerification from '#models/email_verification';
 import User from '#models/user'
 import env from '#start/env';
-import { createUserValidator, updateUserValidor } from '#validators/users'
+import { createUserValidator, updateUserValidator } from '#validators/users'
 import type { HttpContext } from '@adonisjs/core/http'
 import mail from '@adonisjs/mail/services/main';
 import { errors } from '@vinejs/vine';
@@ -20,14 +20,12 @@ export default class UsersController {
   /**
    * Handle form submission for the create action
    */
-  async store({ request }: HttpContext) {
+  async store({ request, response }: HttpContext) {
     // const data = request.only(["fullName", "email", "password", "type"])
     const payload = await request.validateUsing(createUserValidator);
     const user = await User.findBy('email', payload.email)
     if (user) {
-      throw new errors.E_VALIDATION_ERROR({
-        message: 'Email already exists'
-      })
+      throw response.abort("Email already exist");
     }
     const newUser = await User.create(payload);
     const emailVerification = await EmailVerification.create({ userId: newUser.id });
@@ -67,7 +65,7 @@ export default class UsersController {
     } else if (env.get('NODE_ENV') !== 'development') {
       return response.unauthorized();
     }
-    const payload = await request.validateUsing(updateUserValidor);
+    const payload = await request.validateUsing(updateUserValidator);
     return user.merge(payload).save()
   }
 

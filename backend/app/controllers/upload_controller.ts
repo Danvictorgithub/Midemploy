@@ -11,7 +11,7 @@ export default class UploadController {
     if (!file) {
       return { message: "No file uploaded" };
     }
-    const link = await (await app.container.make(supabaseService)).uploadImage(file);
+    const link = await (await app.container.make("supabase") as supabaseService).uploadImage(file);
     return { link };
   }
 }

@@ -10,11 +10,10 @@ export default class SupabaseProvider {
    * Register bindings to the container
    */
   register() {
-
-    this.app.container.bind(supabaseService, () => {
+    // Initializes Supabase and checks validity of the configuration
+    this.app.container.bind("supabase" as any, () => {
       const service = new supabaseService()
-      service.init()
-      return service
+      return service.init();
     });
   }
 
@@ -22,8 +21,9 @@ export default class SupabaseProvider {
    * The container bindings have booted
    */
   async boot() {
-    // const supabase = await this.app.container.make(supabaseService)
-    // await supabase.init();
+    // Resolves promise self and applies new class to the container
+    const supabase = await this.app.container.make("supabase" as any) as supabaseService
+    this.app.container.bind("supabase" as any, () => supabase);
   }
 
   /**
