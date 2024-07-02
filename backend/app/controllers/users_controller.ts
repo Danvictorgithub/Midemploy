@@ -1,7 +1,7 @@
 import EmailVerification from '#models/email_verification';
 import User from '#models/user'
 import env from '#start/env';
-import { createUserValidator, updateUserValidator } from '#validators/users'
+import { createUserValidator, updateUserValidator } from '#validators/user'
 import type { HttpContext } from '@adonisjs/core/http'
 import mail from '@adonisjs/mail/services/main';
 
