@@ -1,18 +1,17 @@
 import { BaseSchema } from '@adonisjs/lucid/schema'
 
 export default class extends BaseSchema {
-  protected tableName = 'add_resume_to_users'
+  protected tableName = 'users'
 
   async up() {
-    this.schema.createTable(this.tableName, (table) => {
-      table.increments('id')
-
-      table.timestamp('created_at')
-      table.timestamp('updated_at')
+    this.schema.alterTable(this.tableName, (table) => {
+      table.string('resume').nullable()
     })
   }
 
   async down() {
-    this.schema.dropTable(this.tableName)
+    this.schema.alterTable(this.tableName, (table) => {
+      table.dropColumn('resume')
+    })
   }
 }
